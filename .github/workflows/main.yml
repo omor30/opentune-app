@@ -23,8 +23,9 @@ jobs:
     - name: Unzip Source Code
       run: |
         unzip OpenTune-master.zip
-        mv OpenTune-master/* .   # জিপের ভেতরের ফাইল বাইরে আনা
-        mv OpenTune-master/.* . # হিডেন ফাইল বাইরে আনা
+        # বড় বা ছোট হাতের যেকোনো OpenTune ফোল্ডার পেলেই ফাইল বাইরে নিয়ে আসবে
+        mv OpenTune*/* . 2>/dev/null || mv opentune*/* . 2>/dev/null || true
+        mv OpenTune*/.* . 2>/dev/null || mv opentune*/.* . 2>/dev/null || true
         chmod +x gradlew
 
     - name: Build with Gradle
@@ -35,4 +36,3 @@ jobs:
       with:
         name: OpenTune-APK
         path: app/build/outputs/apk/debug/*.apk
-        
